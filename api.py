@@ -1,11 +1,7 @@
-from flask import Flask, render_template, jsonify, request
-from urllib.parse import unquote
+from flask import Flask
 
 from decouple import config
 from router import test_app, openai_app
-from web import decode_website
-# from doc import decoded_doc
-from summary import summarize_webpage
 
 import os
 import nltk
