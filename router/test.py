@@ -1,20 +1,20 @@
 # router/routes.py
 from flask import Flask, render_template, jsonify, request
 from urllib.parse import unquote
-
+from . import test_app
 # 导入其他需要的模块和函数
 from web import decode_website
 from summary import summarize_webpage
 
 # 创建 Flask 应用程序实例
-app = Flask(__name__)
+
 
 #两个测试接口
-@app.route('/')
+@test_app.route('/')
 def home():
     return render_template('index.html')
 
-@app.route('/api/data', methods=['GET','POST'])
+@test_app.route('/api/data', methods=['GET','POST'])
 def get_data():
     if request.method == 'GET':
         sample_data = {
