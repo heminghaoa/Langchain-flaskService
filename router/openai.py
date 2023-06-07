@@ -1,9 +1,9 @@
 # router/openai.py
 from flask import Flask, jsonify
+from . import openai_app
 
-app = Flask(__name__)
 
-@app.route('/api2', methods=['GET'])
+@openai_app.route('/api2', methods=['GET'])
 def api2():
     data = {
         'message': 'API 2'

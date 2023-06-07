@@ -1,3 +1,8 @@
 # router/__init__.py
-from .openai import app as openai_app
-from .test import app as test_app
+from flask import Blueprint
+
+openai_app = Blueprint('openai', __name__)
+test_app = Blueprint('test', __name__)
+
+from .openai import *
+from .test import *
