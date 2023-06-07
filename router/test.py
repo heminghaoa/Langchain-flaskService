@@ -3,8 +3,8 @@ from flask import Flask, render_template, jsonify, request
 from urllib.parse import unquote
 from . import test_app
 # 导入其他需要的模块和函数
-from web import decode_website
-from summary import summarize_webpage
+from service.web import decode_website
+from service.summary import summarize_webpage
 
 # 创建 Flask 应用程序实例
 
