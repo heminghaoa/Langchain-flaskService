@@ -36,4 +36,33 @@ python3 api.py
 - `data`：包含一个整数列表，其中包含了数字 1 到 5。
 
 ---
+## Chat API
 
+此API允许您与OpenAI的GPT-3.5 Turbo模型进行对话。您可以向API发送一个包含问题的请求，并获取对应的回答。
+
+### 请求
+
+- **URL**: `/chat`
+- **方法**: GET
+- **请求体** (JSON格式):
+
+```json
+{
+  "question": "用日语说你好"
+}
+```
+
+### 响应
+
+- **状态码**: 200 OK
+- **响应体** (JSON格式):
+
+```json
+{
+  "message": {
+    "content": "こんにちは (Konnichiwa)。",
+    "role": "assistant"
+  }
+}
+```
+---
