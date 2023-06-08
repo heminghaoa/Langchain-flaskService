@@ -5,8 +5,16 @@ from . import test_app
 # 导入其他需要的模块和函数
 from service.web import decode_website
 from service.summary import summarize_webpage
+from service.takumi import takumi_demo
 
-# 创建 Flask 应用程序实例
+#takumi api test
+@test_app.route('/takumi',methods=['POST'])
+def get_takumidemo():
+    answer = takumi_demo()
+    response = {
+        'answer': answer,
+    }
+    return jsonify(response)
 
 
 #两个测试接口
