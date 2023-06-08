@@ -27,7 +27,7 @@ def takumi_demo():
     query = "貫通部の防火区画の処理方法は？" #本质是index查找相关资料，并非提示词
     docs = docsearch.similarity_search(query)
 
-    llm = OpenAI(temperature=0)
+    llm = OpenAI(temperature=0)#llm = OpenAI(model_name="text-davinci-003",max_tokens=1024) 选择OpenAI模型，调参数
     chain = load_qa_chain(llm, chain_type="stuff", verbose=True)
     output_summary = chain.run(input_documents=docs, question=query)
     wrapped_text = textwrap.fill(output_summary, width=100)

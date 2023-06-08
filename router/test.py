@@ -26,7 +26,7 @@ def home():
 def get_data():
     if request.method == 'GET':
         sample_data = {
-            'message': 'Hello, Flask API!',
+            'message': 'Hello,API!',
             'data': [1, 2, 3, 4, 5]
         }
         print ("DEBUG",sample_data)
