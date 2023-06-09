@@ -3,3 +3,5 @@ Procfile
 AWS*
 __pycache__/
 *.docx
+.DS_Store
+ChromaVectorDB
