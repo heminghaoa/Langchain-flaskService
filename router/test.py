@@ -5,12 +5,12 @@ from . import test_app
 # 导入其他需要的模块和函数
 from service.web import decode_website
 from service.summary import summarize_webpage
-from service.takumi import takumi_demo
+from service.takumi import takumi_demo,takumi_demo2
 
 #takumi api test
 @test_app.route('/takumi',methods=['POST'])
 def get_takumidemo():
-    answer = takumi_demo()
+    answer = takumi_demo2()
     response = {
         'answer': answer,
     }
