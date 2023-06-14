@@ -10,7 +10,6 @@ from decouple import config
 import textwrap
 from langchain.prompts import PromptTemplate
 #流
-
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 
 from langchain.chat_models import ChatOpenAI #导入聊天模型
@@ -68,9 +67,6 @@ def takumi_demo2():
     environment="us-west4-gcp-free"
     )
     index_name="chattest"
-    # 持久化数据
-    #docsearch = Pinecone.from_documents(split_docs, embeddings, index_name=index_name)
-
     # 加载数据
     docsearch = Pinecone.from_existing_index(index_name,embeddings)
 

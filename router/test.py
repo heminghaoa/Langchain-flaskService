@@ -6,6 +6,9 @@ from . import test_app
 from service.web import decode_website
 from service.summary import summarize_webpage
 from service.takumi import takumi_demo,takumi_demo2
+from service.ailawyer import LoadPDF_demo,lawyer_demo2
+import os
+
 
 #takumi api test
 @test_app.route('/takumi',methods=['POST'])
@@ -17,6 +20,17 @@ def get_takumidemo():
     return jsonify(response)
 
 
+#lawyerai api test
+@test_app.route('/lawyer',methods=['POST'])
+def get_lawyerdemo():
+    request_data = request.json
+    question = request_data.get('question')
+    answer = lawyer_demo2(question)
+    response = {
+        'answer': answer,
+    }
+    return jsonify(response)
+
 #两个测试接口
 @test_app.route('/')
 def home():
@@ -24,6 +38,11 @@ def home():
 
 @test_app.route('/api/data', methods=['GET','POST'])
 def get_data():
+    file_path = 'resource/PDF/test.pdf'
+    if os.path.isfile(file_path):
+        print('File exists.')
+    else:
+        print('File does not exist.')
     if request.method == 'GET':
         sample_data = {
             'message': 'Hello,API!',
