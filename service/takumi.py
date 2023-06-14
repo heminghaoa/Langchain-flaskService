@@ -13,6 +13,8 @@ from langchain.prompts import PromptTemplate
 
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 
+from langchain.chat_models import ChatOpenAI #导入聊天模型
+
 
 def takumi_demo():
     # os.environ["OPENAI_API_KEY"] = config('OPENAI_API_KEY')
@@ -45,12 +47,12 @@ def takumi_demo2():
     template = """Given the following extracted parts of a long document and a question, create a final answer with references ("SOURCES"). 
         If you don't know the answer, just say that you don't know. Don't try to make up an answer.
         ALWAYS return a "SOURCES" part in your answer.
-        Respond in  English.
+        Respond in  CHINESE.
         QUESTION: {question}
         =========
         {summaries}
         =========
-        FINAL ANSWER IN ENGLISH:"""
+        FINAL ANSWER IN CHINESE:"""
     # QA_PROMPT = """
     #     You are a helpful AI assistant. Use the following pieces of context to answer the question at the end.
     #     If you don't know the answer, just say you don't know. DO NOT try to make up an answer.
@@ -75,7 +77,7 @@ def takumi_demo2():
     query = "貫通部の防火区画の処理方法は？" #本质是index查找相关资料，并非提示词
     docs = docsearch.similarity_search(query)
     PROMPT = PromptTemplate(template=template, input_variables=["summaries", "question"])
-    llm = OpenAI(temperature=0,streaming=True, callbacks=[StreamingStdOutCallbackHandler()], verbose=True)
+    llm = ChatOpenAI(temperature=0,streaming=True, callbacks=[StreamingStdOutCallbackHandler()], verbose=True,model_name="gpt-3.5-turbo-16k")
     chain = load_qa_with_sources_chain(llm, chain_type="stuff",prompt=PROMPT)
     # resp = chat(chat_prompt_with_values.to_messages())
     return  chain({"input_documents": docs, "question": query}, return_only_outputs=True)
