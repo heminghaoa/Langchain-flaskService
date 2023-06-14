@@ -44,7 +44,7 @@ def LoadPDF_demo():
 def lawyer_demo2(question):
     template = """Given the following extracted parts of a lengthy legal document and a question, construct a final answer with references ("SOURCES").
         If you don't know the answer, simply state that you do not know. Do not attempt to fabricate an answer.
-        Regardless, always include a "SOURCES" section in your answer, you could express it like this: "この回答は、XXXX法の第XX条を参照しています。"
+        Regardless, always include a "SOURCES" section in your answer, you could express it like this: "この回答は、XXXX法(XX年法律第XX号)の第x編 XXXXX  第X章 XXXXX  第XX条 XXXXX  を参照しています。"
         Respond in  Japnese.
         QUESTION: {question}
         =========
@@ -65,7 +65,7 @@ def lawyer_demo2(question):
     query = question #本质是index查找相关资料，并非提示词
     docs = docsearch.similarity_search(query)
     PROMPT = PromptTemplate(template=template, input_variables=["summaries", "question"])
-    llm = ChatOpenAI(temperature=0,streaming=True, callbacks=[StreamingStdOutCallbackHandler()], verbose=True,model_name="gpt-3.5-turbo-16k")
+    llm = ChatOpenAI(temperature=0,streaming=True, callbacks=[StreamingStdOutCallbackHandler()], verbose=True,model_name="gpt-3.5-turbo")
     chain = load_qa_with_sources_chain(llm, chain_type="stuff",prompt=PROMPT)
     # resp = chat(chat_prompt_with_values.to_messages())
     return  chain({"input_documents": docs, "question": query}, return_only_outputs=True)
