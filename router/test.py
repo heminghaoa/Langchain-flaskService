@@ -5,15 +5,15 @@ from . import test_app
 # 导入其他需要的模块和函数
 from service.web import decode_website
 from service.summary import summarize_webpage
-from service.takumi import takumi_demo,takumi_demo2
-from service.ailawyer import LoadPDF_demo,lawyer_demo2
+from service.takumi import takumi_demo,takumi_demo2,LoadPDF_demo,takumi_demo3
+from service.ailawyer import lawyer_demo2
 import os
 
 
 #takumi api test
 @test_app.route('/takumi',methods=['POST'])
 def get_takumidemo():
-    answer = takumi_demo2()
+    answer = LoadPDF_demo()
     response = {
         'answer': answer,
     }
@@ -25,7 +25,8 @@ def get_takumidemo():
 def get_lawyerdemo():
     request_data = request.json
     question = request_data.get('question')
-    answer = lawyer_demo2(question)
+    answer = takumi_demo3(question)
+    #answer = LoadPDF_demo()
     response = {
         'answer': answer,
     }
