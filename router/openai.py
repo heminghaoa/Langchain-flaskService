@@ -45,18 +45,30 @@ def chat():
 
 @openai_app.route('/civilTermFinder', methods=['POST'])
 def civilTermFinder():
+
+    openai.api_key = os.getenv("OPENAI_API_KEY")
+    request_data = request.json
+    description = request_data.get('description')
     functions = [{
         "name": "extract_civil_keywords",
-        "description": "Extract civil engineering related keywords from a given text",
+        "description": f"""
+        This is a keyword extraction process that can take a piece of text and extract the most relevant keywords associated with civil and piping engineering. 
+        The process should avoid returning non-related words, and only the top five most significant keywords within this field should be returned .
+        from {description},
+        """,
         "parameters": {
             "type": "object",
             "properties": {
                 "keywords": {
                     "type": "array",
                     "items": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The keyword is the smallest independent word"
+
                     },
-                    "description": "The extracted keywords related to civil engineering"
+                    "description": f"""
+                           keywords < 6, 
+                            """,
                 },
 
             },
@@ -65,13 +77,12 @@ def civilTermFinder():
 
     }]
 
-    openai.api_key = os.getenv("OPENAI_API_KEY")
-    request_data = request.json
-    description = request_data.get('description')
+
 
     try:
         completion = openai.ChatCompletion.create(
             function_call="auto",
+            temperature=0,
             model="gpt-3.5-turbo-0613",
             messages=[
                 {
@@ -88,7 +99,7 @@ def civilTermFinder():
         
         if 'choices' in completion and len(completion['choices']) > 0:
             output_message = completion['choices'][0]['message']['function_call']['arguments']
-            return {"keywords": json.loads(output_message) }
+            return {"message": json.loads(output_message) }
         else:
             return jsonify({"error": "No result returned from the model."}), 500
 
