@@ -1,7 +1,7 @@
 from flask import Flask
 
 from decouple import config
-from router import test_app, openai_app
+from router import test_app, openai_app,takumi_app
 
 import os
 import nltk
