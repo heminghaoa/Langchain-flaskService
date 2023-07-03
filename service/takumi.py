@@ -84,11 +84,7 @@ def takumi_demo2():
     return  chain({"input_documents": docs, "question": query}, return_only_outputs=True)
 
 
-def LoadPDF_demo():
-    # Loading documents
-    loader = PyPDFLoader('resource/PDF/takumi/指定給水装置工事事業者工事施行要領R4年4月.pdf')
-    documents = loader.load()
-
+def LoadPDF_demo(pdf_path):
     # Splitting documents into texts
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=650, chunk_overlap=0)
     texts = text_splitter.split_documents(documents)
@@ -96,6 +92,10 @@ def LoadPDF_demo():
     # Specify the directory for persistent storage
     persist_directory = 'VectorDB/ChromaVectorDB/takumi'
     
+      # Loading documents
+    loader = PyPDFLoader(pdf_path,persist_directory)
+    documents = loader.load()
+
     # Creating and persisting the vector database
     embedding = OpenAIEmbeddings()
     vectordb = Chroma.from_documents(documents=texts, embedding=embedding, persist_directory=persist_directory)
@@ -112,6 +112,7 @@ def LoadPDF_demo():
     print(wrapped_text)
 
     return wrapped_text
+    
     
 def takumi_demo3(question):
         template = """Given the following extracted parts of a long document and a question, create a final answer with references ("SOURCES"). 
